@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const { database } = require("./services/database");
+
 const app = express();
 const port = process.env.LOCAL_PORT;
 
@@ -12,8 +13,8 @@ app.use(bodyParser.json());
 const db = database();
 
 // Routes
-const routes = require("./routes/users");
-routes(app, db);
+const usersRoutes = require("./routes/users");
+app.use("/users", usersRoutes(db.usersModel));
 
 // Listener
 app.listen(port, function () {
