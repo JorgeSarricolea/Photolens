@@ -1,16 +1,16 @@
 // database.js
 const database = () => {
   const knex = require("knex")({
-    client: "mysql",
+    client: "mysql2",
     connection: process.env.DATABASE_URL,
   });
 
   // Tables
-  const table = "Users";
+  const users = "Users";
 
   // To get the list of users
   const getUsers = () => {
-    return knex(table).select();
+    return knex(users).select();
   };
 
   // To create a new user
@@ -22,7 +22,7 @@ const database = () => {
     const hashedPassword = await bcrypt.hash(password, Number(saltRounds));
 
     // Insert the user into the database with the hashed password
-    return knex(table).insert({
+    return knex(users).insert({
       name: name,
       last_name: last_name,
       email: email,

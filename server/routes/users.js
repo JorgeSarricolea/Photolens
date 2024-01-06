@@ -1,14 +1,10 @@
 module.exports = function (app, db) {
-  app.get("/", (req, res) => {
-    res.json({ message: "OK" });
-  });
-
-  // GET Method
+  // Get all users
   app.get("/users", (req, res) => {
     res.json({ message: "list of users" });
   });
 
-  // POST method
+  // Create a new user
   app.post("/users", (req, res) => {
     const newUser = req.body;
     console.log(newUser);
@@ -18,7 +14,7 @@ module.exports = function (app, db) {
         res.json({ message: "New user created" });
       })
       .catch((e) => {
-        console.error(e); // Imprime el error en la consola
+        console.error(e); // Print the error in terminal
         res.status(500).json(e);
       });
   });

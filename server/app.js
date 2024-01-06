@@ -1,18 +1,21 @@
-// app.js
+require("dotenv").config();
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const { database } = require("./services/database");
-
-const port = 3000;
-
 const app = express();
+const port = process.env.LOCAL_PORT;
 
 app.use(bodyParser.json());
 
-const db = database(); // Obtener la instancia knex
+// Database knex instance
+const db = database();
 
-require("./routes")(app, db);
+// Routes
+const routes = require("./routes/users");
+routes(app, db);
 
+// Listener
 app.listen(port, function () {
   console.log(`App listening on port ${port}!`);
 });
