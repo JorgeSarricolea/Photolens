@@ -38,4 +38,33 @@ module.exports = function (app, db) {
         res.status(500).json(e);
       });
   });
+
+  // Update a user by ID
+  app.put("/users/:userId", (req, res) => {
+    const userId = req.params.userId;
+    const updatedUser = req.body;
+
+    db.updateUserById(userId, updatedUser)
+      .then(() => {
+        res.json({ message: "User updated successfully" });
+      })
+      .catch((e) => {
+        console.error(e);
+        res.status(500).json(e);
+      });
+  });
+
+  // Delete a user by ID
+  app.delete("/users/:userId", (req, res) => {
+    const userId = req.params.userId;
+
+    db.deleteUserById(userId)
+      .then(() => {
+        res.json({ message: "User deleted successfully" });
+      })
+      .catch((e) => {
+        console.error(e);
+        res.status(500).json(e);
+      });
+  });
 };

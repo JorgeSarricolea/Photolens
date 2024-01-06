@@ -35,7 +35,17 @@ const database = () => {
     });
   };
 
-  return { getUsers, createUser, getUserById }; // Include knex instance
+  // Update a user by ID
+  const updateUserById = (userId, updatedUserData) => {
+    return knex(users).where({ user_id: userId }).update(updatedUserData);
+  };
+
+  // Delete a user by ID
+  const deleteUserById = (userId) => {
+    return knex(users).where({ user_id: userId }).del();
+  };
+
+  return { getUsers, createUser, getUserById, updateUserById, deleteUserById };
 };
 
 module.exports = {
