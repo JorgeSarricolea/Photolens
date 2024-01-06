@@ -1,7 +1,27 @@
 module.exports = function (app, db) {
-  // Get all users
+  // Get Method for all photos
   app.get("/users", (req, res) => {
-    res.json({ message: "list of users" });
+    db.getUsers()
+      .then((users) => {
+        console.log(users);
+        res.json(users);
+      })
+      .catch((e) => res.status(500).send(e));
+  });
+
+  // Get a single user by ID
+  app.get("/users/:userId", (req, res) => {
+    const userId = req.params.userId;
+    db.getUserById(userId)
+      .then((user) => {
+        if (user) {
+          console.log(user);
+          res.json(user);
+        } else {
+          res.status(404).json({ Message: "User not found" });
+        }
+      })
+      .catch((e) => res.status(500).send(e));
   });
 
   // Create a new user
